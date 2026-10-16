@@ -32,12 +32,29 @@ function Todo() {
     setTaskInput("");
   }
 
+  function toggleTask(id) {
+    setTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === id
+          ? {
+              ...todo,
+              status: todo.status === "completed" ? "pending" : "completed",
+            }
+          : todo,
+      ),
+    );
+  }
+
   return (
     <div className="m-5">
       {todos.map((i) => (
         <div key={i.id} className="flex gap-2">
           <p>{i.task}</p>
-          <input type="checkbox" />
+          <input
+            type="checkbox"
+            checked={i.status === "completed"}
+            onChange={() => toggleTask(i.id)}
+          />
         </div>
       ))}
       <div className="flex gap-5 mt-5">
